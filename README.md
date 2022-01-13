@@ -1,5 +1,7 @@
 # Sublime Sophia package
 
+Sublime Text package for [Sophia](https://github.com/aeternity/aesophia) contract programming language for aeternity blockchain.
+
 Features:
 
 - Syntax Highlighting
