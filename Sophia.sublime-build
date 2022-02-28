@@ -1,5 +1,5 @@
 {
-    "shell_cmd": "aesophia_cli \"$file\" | sed -e ':a' -e 'N' -e '\\$!ba' -e 's/:\\n/: /g'",
+    "shell_cmd": "aesophia_cli \"$file\" 2>&1 1>/dev/null | sed -e ':a' -e 'N' -e '\\$!ba' -e 's/:\\n/: /g'",
     "selector": "source.sophia",
     "file_patterns": "*.aes",
     "working_dir": "${file_path}",
