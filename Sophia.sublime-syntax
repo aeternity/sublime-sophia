@@ -18,243 +18,243 @@ variables:
 contexts:
   commentLine:
     - match: //.*
-      scope: comment.line
+      scope: comment.line.sophia
 
   commentBlock:
     - match: /\*
       push:
-        - meta_scope: comment.block
+        - meta_scope: comment.block.sophia
         - match: \*/
           pop: true
 
   punctuations:
     - match: '~'
-      scope: punctuation.definition.keyword
+      scope: punctuation.definition.keyword.sophia
     - match: ;
-      scope: punctuation.terminator
+      scope: punctuation.terminator.sophia
     - match: \.
-      scope: punctuation.accessor
+      scope: punctuation.accessor.sophia
     - match: \,
-      scope: punctuation.separator
+      scope: punctuation.separator.sophia
     - match: \|(?!\|)
-      scope: punctuation.separator
+      scope: punctuation.separator.sophia
     - match: \[
-      scope: punctuation.section.brackets.begin
+      scope: punctuation.section.brackets.begin.sophia
       push: brackets
     - match: \]
-      scope: invalid.illegal.stray-bracket-end
+      scope: invalid.illegal.stray-bracket-end.sophia
     - match: \{
       scope: punctuation.section.braces.begin
       push: braces
     - match: \}
-      scope: invalid.illegal.stray-bracket-end
+      scope: invalid.illegal.stray-bracket-end.sophia
     - match: \(
-      scope: punctuation.section.parens.begin
+      scope: punctuation.section.parens.begin.sophia
       push: parens
     - match: \)
-      scope: invalid.illegal.stray-bracket-end
+      scope: invalid.illegal.stray-bracket-end.sophia
 
   brackets:
     - match: \]
-      scope: punctuation.section.brackets.end
+      scope: punctuation.section.brackets.end.sophia
       pop: true
     - include: main
 
   braces:
     - match: \}
-      scope: punctuation.section.braces.end
+      scope: punctuation.section.braces.end.sophia
       pop: true
     - include: main
 
   parens:
     - match: \)
-      scope: punctuation.section.parens.end
+      scope: punctuation.section.parens.end.sophia
       pop: true
     - include: main
 
   storage:
     - match: '{{RE_PRIMITIVES}}'
-      scope: storage.type.aes
+      scope: storage.type.sophia
 
   keyword:
     - match: '{{RE_KEYWORDS}}'
-      scope: keyword.aes
+      scope: keyword.sophia
 
   constant:
     - match: '{{RE_CONSTANTS}}'
-      scope: constant.language.aes
+      scope: constant.language.sophia
 
   address_constant:
     - match: '(ak_|ok_|oq_|ct_)[\w]+'
-      scope: constant.numeric.address.aes
+      scope: constant.numeric.address.sophia
 
   buildin_functions:
     - match: '{{RE_BUILDIN_FUNCTIONS}}'
-      scope: support.function.aes
+      scope: support.function.sophia
 
   buildin_types:
     # not semantically correct but should do the job
     - match: '\bindexed\b'
-      scope: support.type.aes
+      scope: support.type.sophia
 
   string:
     - match: '"'
-      scope: punctuation.definition.string.begin
+      scope: punctuation.definition.string.begin.sophia
       push:
-      - meta_scope: string.quoted.double
+      - meta_scope: string.quoted.double.sophia
       - match: '"'
-        scope: punctuation.definition.string.end
+        scope: punctuation.definition.string.end.sophia
         pop: true
       - include: escape_sequence
 
   escape_sequence:
       - match: \\x[0-9a-fA-F]{2}
-        scope: constant.character.escape
+        scope: constant.character.escape.sophia
       - match: \\[0-9]{3}
-        scope: constant.character.escape
+        scope: constant.character.escape.sophia
       - match: \\.
-        scope: constant.character.escape
+        scope: constant.character.escape.sophia
 
   character:
     - match: '''.'''
-      scope: string.quoted.single
+      scope: string.quoted.single.sophia
     - include: escape_sequence
 
   bytes:
     - match:
         '#[0-9a-fA-F][0-9a-fA-F_]*'
-      scope: constant.numeric.integer.other
+      scope: constant.numeric.integer.other.sophia
 
   integer:
     - match:
         \b(\d[\d_]*)\b
-      scope: constant.numeric.integer
+      scope: constant.numeric.integer.sophia
 
   hexadecimal:
     - match:
         \b(0[xX][\da-fA-F][\da-fA-F_]*)\b
-      scope: constant.numeric.hexadecimal
+      scope: constant.numeric.hexadecimal.sophia
 
   modifiers:
     - match: \b(payable|stateful|private)\b
-      scope: storage.modifier
+      scope: storage.modifier.sophia
 
   pragma:
     - match: '(@\w+)\s(=<|>=|==|!=|<|>)\s([\d\.]+)'
-      scope: meta.preprocessor 
+      scope: meta.preprocessor.sophia
       captures:
-        1: punctuation.definition.annotation
-        2: keyword.operator.other
-        3: variable.other.constant
+        1: punctuation.definition.annotation.sophia
+        2: keyword.operator.other.sophia
+        3: variable.other.constant.sophia
 
   operator:
     - match:
         '::|\+\+'
       # list operators
-      scope: keyword.operator.other
+      scope: keyword.operator.other.sophia
     - match:
         '<<|>>'
-      scope: keyword.operator.bitwise
+      scope: keyword.operator.bitwise.sophia
     - match:
         '=<|>=|==|!=|<|>'
       # no comparison scope :(
-      scope: keyword.operator.other
+      scope: keyword.operator.other.sophia
     - match:
         '\|\||&&|!'
-      scope: keyword.operator.logical
+      scope: keyword.operator.logical.sophia
     - match: 
         '\b(mod|band|bor|bxor|bnot)\b'
-      scope: keyword.operator.word
+      scope: keyword.operator.word.sophia
     - match:
         '\+|-|\*|/|\^'
-      scope: keyword.operator.arithmetic
+      scope: keyword.operator.arithmetic.sophia
     - match: '='
-      scope: keyword.operator.assignment
+      scope: keyword.operator.assignment.sophia
 
   namespace:
     - match: 
         '(namespace)\s+({{RE_CON}})\s+(=)'
       captures:
-        1: keyword.other
-        2: entity.name.namespace
-        3: keyword.operator.assignment
+        1: keyword.other.sophia
+        2: entity.name.namespace.sophia
+        3: keyword.operator.assignment.sophia
 
   typedefs:
     - match:
         '\b(type|record|datatype)\s+({{RE_ID}})\b'
       captures:
         # first one is apparently for backward-compat
-        1: storage.type keyword.declaration.type
-        2: entity.name.type
+        1: storage.type.sophia keyword.declaration.type.sophia
+        2: entity.name.type.sophia
 
   function:
     - match:
         '\b(function|entrypoint)\s({{RE_ID}})\b'
       captures:
         # first one is apparently for backward-compat
-        1: storage.type.function keyword.declaration.function
-        2: entity.name.function
+        1: storage.type.function.sophia keyword.declaration.function.sophia
+        2: entity.name.function.sophia
 
   contract:
     - match:
         '\b(main\s)?(contract)\s({{RE_CON}})\b'
       captures:
-        1: storage.modifier
+        1: storage.modifier.sophia
         # first one is apparently for backward-compat
-        2: storage.type.class keyword.declaration.class
-        3: entity.name.class
+        2: storage.type.class.sophia keyword.declaration.class.sophia
+        3: entity.name.class.sophia
 
   interface:
     - match:
         '\b(contract\sinterface)\s({{RE_CON}})\b'
       captures:
         # first one is apparently for backward-compat
-        1: storage.type.interface keyword.declaration.interface
-        2: entity.name.interface
+        1: storage.type.interface keyword.declaration.interface.sophia
+        2: entity.name.interface.sophia
 
   constructor:
     - match: '\b[A-Z][0-9a-zA-Z_]*\b'
-      scope: variable.function variable.other
+      scope: variable.function.sophia variable.other.sophia
 
   function-call:
-    - meta_scope: meta.function-call
+    - meta_scope: meta.function-call.sophia
     - match:
         '\b{{RE_ID}}\b(?=\()'
-      scope: variable.function
+      scope: variable.function.sophia
       push: function-call-arguments
 
     # - match: (?=\()
-    #   scope: punctuation.section.parens.begin.aes
+    #   scope: punctuation.section.parens.begin
 
   function-call-arguments:
     - match: \(
-      scope: punctuation.section.parameters.begin.aes
+      scope: punctuation.section.parameters.begin.sophia
       set:
-        - meta_scope: meta.function-call.parameters.aes
+        - meta_scope: meta.function-call.parameters.sophia
         - match: \)
-          scope: punctuation.section.parameters.end.aes
+          scope: punctuation.section.parameters.end.sophia
           pop: true
         - match: ','
-          scope: punctuation.separator.parameters.aes
+          scope: punctuation.separator.parameters.sophia
         - include: main
 
   includeModule:
     - match: '\binclude\s(?=\S)'
-      scope: keyword.control.import
+      scope: keyword.control.import.sophia
 
   qualifiedIdentifiers:
     - match: '\b({{RE_CON}})(\.)({{RE_ID}})'
       captures:
-        1: support.class
-        2: punctuation.accessor
-        3: variable.other.member
+        1: support.class.sophia
+        2: punctuation.accessor.sophia
+        3: variable.other.member.sophia
 
   qualifiedConstructor:
     - match: '\b({{RE_CON}})(\.)({{RE_CON}})'
       captures:
-        1: support.class
-        2: punctuation.accessor
-        3: variable.function
+        1: support.class.sophia
+        2: punctuation.accessor.sophia
+        3: variable.function.sophia
 
   main:
     - include: pragma
